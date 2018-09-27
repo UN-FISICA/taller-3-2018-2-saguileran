@@ -5,9 +5,17 @@
 from copy import deepcopy
 #import numpy as np
 bstr='+7263.1239'#str(input('Ingrese el número b con signo: '))
-astr='+1.321'#  str(input('Ingrese el número a con signo: '))
+astr='+7263.321'#  str(input('Ingrese el número a con signo: '))
 if ('+' or '-') not in bstr:bstr='+'+bstr
 if ('+' or '-') not in bstr:astr='+'+astr
+#Convirtiendo list to str
+def convls(a):
+    s=''
+    for ii in range(len(a)): s+=str(a[ii])
+    return(s)
+#COnvirtiendo tupla a str
+def convtl(a):
+    return(a[0][1:]+a[1])
 #Convirtiendo string a número 
 def conv(x):
  ap=(list((x.split('.'))[0]),list((x[1:].split('.'))[1]))
@@ -87,9 +95,18 @@ def mult(astr,bstr):
     d11=convert(D[0][1:]+D[1],len(a[1])+len(b[1]))
     return(prin(d11))
 mult(astr,bstr)
-#definiendo la división A/B
-#if len(a[1])<len(b[1]):
 
+#definiendo la división 1/A
+unidad=(['+',1],[])
+filld(unidad,len(a[1]))
+R,A,unidad=[],convtl(a),convtl(unidad)
+if float(convls(A))>float(convls(unidad)):
+    while float(convls(A))>=float(convls(unidad)):
+        unidad.append(0)
+        R.append('0')
+    R.append(1)
+    print(float(convls(unidad))-float(convls(A)))
+    
 #Definiendo la función comparación
 def comp(a,b):
     if len(a[1])==len(b[1]) and len(a[0])==len(b[0]): 
@@ -101,6 +118,20 @@ def comp(a,b):
                 return(print('NO son la misma cantidad, son diferentes números'))
                 break
     else: return(print('NO son la misma cantidad, son diferentes números'))
+#Tupla mayor
+def mayt(a,b):
+    if len(a[0][1:])>len(b[0][1:]):return(a)
+    if len(a[0][1:])<len(b[0][1:]):return(b)
+    if len(a[0][1:])==len(b[0][1:]): 
+        c=0
+        for i in range(1,len(a[0][1:])):
+            if int(a[0][i])>int(b[0][i]): return(a); c=1; break 
+            if int(a[0][i])<int(b[0][i]):return(b); c=1; break
+        if c==0:
+            for j in range(max(len(a[1]),len(b[1]))):
+                if int(a[1][j])>int(b[1][j]):print((a[1][j],(b[1][j]))); return(a); break 
+                else: return(b); break    
+            
 #A=list(astr[1:astr.find('.')]+astr[astr.find('.')+1:])
 #B=list(bstr[1:bstr.find('.')]+bstr[bstr.find('.')+1:])
 #if len(b[1])>len(a[1]): 
