@@ -3,17 +3,20 @@
 #import sys
 #print('MÃ¡xima cantidad de elementos de una lista '+str(sys.maxsize))
 from copy import deepcopy
+#import math
 #import numpy as np
 bstr='12320.1239'#str(input('Ingrese el número b con signo: '))
-astr='+0.321'#  str(input('Ingrese el número a con signo: '))
+astr='+4.0321'#  str(input('Ingrese el número a con signo: '))
 if ('+' or '-') not in bstr:bstr='+'+bstr
 if ('+' or '-') not in bstr:astr='+'+astr
+#Convirtiendo tupla a str
+    
 #Convirtiendo list to str
 def convls(a):
     s=''
     for ii in range(len(a)): s+=str(a[ii])
     return(s)
-#COnvirtiendo tupla a str
+#COnvirtiendo tupla a lista
 def convtl(a):
     return(a[0][1:]+a[1])
 #Convirtiendo string a número 
@@ -25,7 +28,7 @@ def conv(x):
     else: ap[f][f1]=int(ap[f][f1])
  return(ap)
 ap=conv(astr);bp=conv(bstr)
-#convertiendo una lista a un string
+#convertiendo una lista a una tupla
 def convert(x,d): 
  if d<len(x):
   for u in range(len(x)): x[u]=str(x[u])
@@ -54,17 +57,24 @@ def comp(a,b):
     else: return(print('NO son la misma cantidad, son diferentes números'))
 #Tupla mayor
 def mayt(p,v):
-    if len(p[0][1:])>len(v[0][1:]):return(p)
+    if len(p[0][1:])>len(v[0][1:]):retif ('+' or '-') not in bstr:bstr='+'+bstrurn(p)
     elif len(p[0][1:])<len(v[0][1:]):return(v)
-    elif len(p[0][1:])==len(v[0][1:]): 
-        c=0
-        for i in range(1,len(p[0][1:])):
-            if int(p[0][i])>int(v[0][i]):return(p); c=1; break 
-            if int(p[0][i])<int(v[0][i]):return(v); c=1; break
-        if c==0:
-            for j in range(max(len(p[1]),len(v[1]))):
-                if int(p[1][j])>int(v[1][j]):print((p[1][j],(v[1][j]))); return(p); break 
-                else: return(v); break 
+        elif p[0][0]==v[0][0] and len(p[0][1:])==len(v[0][1:]):
+        if len(p[1])>len(v[1]): filld(v,len(p[1])-len(v[1]))
+        else: filld(p,-len(p[1])+len(v[1]))
+        c,i,j=1,1,0
+        while c!=0:
+            if p[j][i]>v[j][i]:     
+                return(p)
+                c=0
+            elif p[j][i]<v[j][i]: 
+                return(v)   
+                c=0
+            if len(v[j])-1>i: i+=1
+            if len(v[j])-1==i: j,i=1,0
+    else: 
+        if '+' in v[0]: return(v)
+        else: return(p)
 #Agregando ceros a izquierda y deint(convls(Unidad))%int(convls(A))recha
 def filld(a,n):
     for i11 in range(n):a[1].append(0)
@@ -84,7 +94,7 @@ def fill(a,b):
 def sum1(a,b):
  a,b=fill(a,b)[0],fill(a,b)[1]
  if a[0][0]==b[0][0]:
-  s,c,v=([],[]),0,0
+  s,v=([],[]),0
   for k in [1,0]:
     if k==0: c1=0
     else: c1=-1
@@ -118,28 +128,37 @@ def mult(astr,bstr):
  D=m[0]
  for d3 in range(1,len(m)):
   D=sum1(D,m[d3])
- d11=convert(D[0][1:]+D[1],len(a[1])+len(b[1]))
- return(prin(d11))
+ d11=convert(D[0][1:]+D[1],len(a[1])+len(b[1])-c)
+ return((d11))
 mult(astr,bstr)
 
-#definiendo la división 1/A
-decimales=10#int(input('Ingrese el número de decimales '))
+#definiendo la división 1/A, A/B
+decimales=15#int(input('Ingrese el número de decimales '))
 unidad=(['+',1],[])
 filld(unidad,len(a[1]))
 R,A=[],convtl(a)
 if mayt(a,unidad)==a: #a mayor a 1
-    Unidad,R=convtl(unidad),[0,'.']
-    while len(Unidad)<len(A):
-        R.append(0);Unidad.append(0)
-    Unidad.append(0)
-    for iii in range(decimales):
-        R.append(int(convls(Unidad))//int(convls(A)))
-        Unidad=list(str(int(convls(Unidad))%int(convls(A))))
-        elements(Unidad)
-        if int(convls(Unidad))<int(convls(A)):Unidad.append(0)
-    Div=([R[0]],R[2:])
-else:  #a menor a 1
-    Unidad,R=convtl(unidad),[0,'.']
+    Unidad,R=convtl(unidad),[0]
+else: Unidad=convtl(unidad)  #a menor a 1
+while len(Unidad)<len(A):
+    R.append(0);Unidad.append(0)
+if int(convls(Unidad))//int(convls(A))==0: Unidad.append(0)
+for iii in range(decimales):
+    R.append(int(convls(Unidad))//int(convls(A)))
+    Unidad=list(str(int(convls(Unidad))%int(convls(A))))
+    elements(Unidad)
+    if int(convls(Unidad))<int(convls(A)):Unidad.append(0)
+if float(astr)<1:
+    decimales+=1
+    Div=convert(R,decimales-1)  #para A<0
+if float(astr)>1:Div=convert(R,decimales)  #para A>0
+prin(Div)
+#Definiendo división b/a
+bb=deepcopy(b)
+filld(bb,abs(len(b[1])-len(Div[1])))
+bb=convls(bb[0]+['.']+bb[1])
+prin(mult(bb,convls(Div[0]+['.']+Div[1])))
+#mult()
     
 
 #if float(convls(A))>float(convls(unidad)):
@@ -154,8 +173,3 @@ else:  #a menor a 1
 #A=list(astr[1:astr.find('.')]+astr[astr.find('.')+1:])
 #B=list(bstr[1:bstr.find('.')]+bstr[bstr.find('.')+1:])
 #if len(b[1])>len(a[1]): 
-    
-    
-    
-    
-    
