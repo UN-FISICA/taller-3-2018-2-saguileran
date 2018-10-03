@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#Máxima cantidad de elementos en una lista
-#import sys
-#print('Máxima cantidad de elementos de una lista '+str(sys.maxsize))
 from copy import deepcopy
 #import numpy as np
 bstr='+123.12355'#str(input('Ingrese el número b con signo: '))

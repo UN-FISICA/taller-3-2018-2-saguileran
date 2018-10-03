@@ -60,8 +60,8 @@ def mayt(p,v):
     if len(p[0][1:])>len(v[0][1:]):retif ('+' or '-') not in bstr:bstr='+'+bstrurn(p)
     elif len(p[0][1:])<len(v[0][1:]):return(v)
         elif p[0][0]==v[0][0] and len(p[0][1:])==len(v[0][1:]):
-        if len(p[1])>len(v[1]): filld(v,len(p[1])-len(v[1]))
-        else: filld(p,-len(p[1])+len(v[1]))
+            if len(p[1])>len(v[1]): filld(v,len(p[1])-len(v[1]))
+            else: filld(p,-len(p[1])+len(v[1]))
         c,i,j=1,1,0
         while c!=0:
             if p[j][i]>v[j][i]:     
