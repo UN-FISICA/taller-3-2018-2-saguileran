@@ -1,7 +1,7 @@
 from copy import deepcopy
 import numpy as np
-bstr='+120.612379'#str(input('Ingrese el número b con signo: '))
-astr='-33.0897'#  str(input('Ingrese el número a con signo: '))
+bstr='-120.612379'#str(input('Ingrese el número b con signo: '))
+astr='+33.0897'#  str(input('Ingrese el número a con signo: '))
 unidad=(['+',1],[0])
 munidad=(['-',1],[0])
 #Número entero versión tupla
@@ -91,6 +91,9 @@ def corr(x,neg):
             if s[i][j]>9 and j!=0: 
                 s[i][j-1]+=m 
                 s[i][j]-=10*m
+            if j==0 and i==0 and s[i][j]>9: 
+                s=(np.insert(s[0],0,m),s[1])
+                s[0][1]-=10*m+10*(neg)
             if neg==1: #Para una resta
                 if i==1 and j==0 and s[i][j]<0: 
                     s[0][len(s[0])-1]+=m
@@ -98,9 +101,10 @@ def corr(x,neg):
                 if s[i][j]<0 and j!=0: 
                     s[i][j-1]+=m 
                     s[i][j]-=10*m
-    if j==0 and i==0 and s[i][j]>9: 
-        s=(np.insert(s[0],0,m),s[1])
-        s[0][1]-=10*m+10*(neg)
+                if j==0 and i==0 and s[i][j]<0: 
+                    if  s[i][j]<-9:s=(np.insert(s[0],0,m),s[1])
+                    s[0][0]-=10*m+10*(neg)-10
+    
     return([x[0][0]]+list(s[0]),list(s[1]))
    
 
@@ -114,24 +118,31 @@ def imprimir(x):
 
 def suma(x, y):
     a,b=deepcopy(x),deepcopy(y)
-    #if a[0][0]==b[0][0]:
-    compl(a,b)
-    s=([a[0][0]]+list(convnp(a)[0]+convnp(b)[0]),list(convnp(a)[1]+convnp(b)[1]))
-    return(corr(s,0))
-
+    if a[0][0]==b[0][0]:
+        compl(a,b)
+        s=([a[0][0]]+list(convnp(a)[0]+convnp(b)[0]),list(convnp(a)[1]+convnp(b)[1]))
+        return(s)#corr(s,1))
+    else: 
+        return(resta(x,y))
 def resta(x, y):
    a,b=deepcopy(x),deepcopy(y)
    compl(a,b)
-   pos,neg='+','-'
-   A,B=convnp(a),convnp(b)
-   a[0][0],b[0][0]='+','+'
-   if '-' in x[0]:c1,c=1,0
-   else:c,c1=1,0
-   if mayor(a,b)==a: #defino a-b, y el resultado va con el signo de a
-       s=([pos*c+neg*c1]+list(A[0]+B[0]*-1),list(A[1]+B[1]*-1))
-   else: #defino b-a, y el resultado va con el signo de a
-       s=([pos*c1+neg*c]+list(A[0]*-1+B[0]),list(A[1]*-1+B[1]))
-   return(corr(s,1)) #s es una tupla
+   if a[0][0]!=b[0][0]:
+       if ('+' in b[0])==True:b=(['-']+b[0][1:],b[1])
+       else: b=(['+']+b[0][1:],b[1])
+       return(corr(suma(a,b),1))
+   else: 
+       sig=b[0][0]
+       if b[0][0]=='+': sigop='-'
+       else:sigop='+'
+       a,b=(a[0][1:],a[1]),(b[0][1:],b[1])
+       A,B,i=convnp(a),convnp(b),0
+       if np.greater(a,b)[0]==True: #defino a-b, y el resultado va con el signo de a
+           s=([sig]+list(A[0]+B[0]*-1),list(A[1]+B[1]*-1))
+       else: #defino b-a, y el resultado va con el signo de a
+           s=([sigop]+list(A[0]*-1+B[0]),list(A[1]*-1+B[1]))
+       return(corr(s,1)) #s es una tupla
+
 
 
 def multiplicacion(x, y):
@@ -196,11 +207,12 @@ def pi(n):
         else: f=munidad
         denominador=suma(multiplicacion(enterot(i),enterot(2)),unidad)
         numerador=f
-        R.append(division(numerador,denominador))
+        R.append(multiplicacion(division(numerador,denominador),enterot(4)))
     M=enterot(0)
     for j in range(len(R)):
         M=suma(M,R[j])
-    return(multiplicacion(enterot(4),M))
-print(pi(4))
+    return(R)
+print(pi(2))
+
 #if __name__    == "__main__":
 #    print(imprimir(pi()))
