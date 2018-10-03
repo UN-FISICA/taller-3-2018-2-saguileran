@@ -123,7 +123,15 @@ def suma(x, y):
         s=([a[0][0]]+list(convnp(a)[0]+convnp(b)[0]),list(convnp(a)[1]+convnp(b)[1]))
         return(s)#corr(s,1))
     else: 
-        return(resta(x,y))
+       compl(a,b)
+       sig=b[0][0]
+       a,b=(a[0][1:],a[1]),(b[0][1:],b[1])
+       A,B,i=convnp(a),convnp(b),0
+       if np.greater(a,b)[0]==True: #defino a-b, y el resultado va con el signo de a
+           s=([x[0][0]]+list(A[0]+B[0]*-1),list(A[1]+B[1]*-1))
+       else: #defino b-a, y el resultado va con el signo de a
+           s=([y[0][0]]+list(A[0]*-1+B[0]),list(A[1]*-1+B[1]))
+       return(corr(s,1)) #s es una tupla
 def resta(x, y):
    a,b=deepcopy(x),deepcopy(y)
    compl(a,b)
@@ -164,7 +172,7 @@ def multiplicacion(x, y):
     return(convlt(M,db+da,d))
 
 def division(x, y):   #Dividiendo y en x, y/x
-    decimales=15
+    decimales=30
     x,y=deepcopy(y),deepcopy(x)
     sy,sx=y[0][0],x[0][0]
     a=(['+']+x[0][1:],x[1]) #Copia de tupla
@@ -211,7 +219,7 @@ def pi(n):
     M=enterot(0)
     for j in range(len(R)):
         M=suma(M,R[j])
-    return(R)
+    return(M)
 print(pi(2))
 
 #if __name__    == "__main__":
