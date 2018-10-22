@@ -1,45 +1,53 @@
+import myfloat_func as my
 class MyFloat:
 
-    def __init__(self):
-        pass
+    def __init__(self,t):
+        if type(t) is int:
+            self.t=my.enterot(t)
+        elif type(t) is float:
+            self.t=my.enterot(int(t//1))
+            self.t=(self.t[0],list(str(t-t//1)[2:]))
+            my.enteros(self.t)
+        else:
+            self.t=t
 
-    def __add__(self):
-        pass
+    def __add__(self,other):
+        return(MyFloat(my.suma(self.t,other)))
 
-    def __sub__(self):
-        pass
+    def __sub__(self,other):
+        return(MyFloat(my.resta(self.t,other)))
 
-    def __mul__(self):
-        pass
+    def __mul__(self,other):
+        return(MyFloat(my.multiplicacion(self.t,other)))
 
-    def __div__(self):
-        pass
+    def __div__(self,other):
+        return(MyFloat(my.multiplicacion(self.t,other)))
 
-    def __radd__(self):
-        pass
+    def __radd__(self,other):
+        return(MyFloat(my.suma(other,self.t)))
 
-    def __rsub__(self):
-        pass
+    def __rsub__(self,other):
+        return(MyFloat(my.resta(other,self.t)))
 
-    def __rmul__(self):
-        pass
+    def __rmul__(self,other):
+        return(MyFloat(my.multiplicacion(other,self.t)))
 
-    def __rdiv__(self):
-        pass
+    def __rdiv__(self,other):
+        return(MyFloat(my.multiplicacion(other,self.t)))
 
     def __str__(self):
-        pass
+        return(my.imprimir(self.t))
 
     def __repr__(self):
-        pass
+        return(my.imprimir(self.t))
 
-    def __eq__(self):
-        pass
+    def __eq__(self,other):
+         return(my.comparacion(self.t,other))
 
-    def __ne__(self):
-        pass
+    def __ne__(self,other):
+         return(my.comparacion(self.t,other))
 
 if __name__ == "__main__":
-    # Escribir aca el codigo para calcular pi. Al finalizar el calculo solo
-    # debe imprimir el valor de pi, sin otros textos ni nada
-    pass
+    a=MyFloat((['+',1],[0]))
+    b=MyFloat((['+',4],[0]))
+    print(a+b)
